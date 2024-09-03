@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Number Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+        background-color: black; /* Background color set to black */
+        color: white; /* Text color set to white */
+      }
+      #output {
+        font-size: 2em;
+        margin-top: 20px;
+        transition: transform 0.5s, opacity 0.5s; /* Add transitions for transform and opacity */
+        opacity: 0; /* Start with the output hidden */
+      }
+      button {
+        background-color: #333; /* Button background color */
+        color: white; /* Button text color */
+        border: none;
+        padding: 10px 20px;
+        font-size: 1em;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #555; /* Button hover color */
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="generateRandomNumber()">Press Me</button>
+    <div id="output"></div>
+
+    <script>
+      function generateRandomNumber() {
+        var output = document.getElementById("output");
+        var target = Math.floor(Math.random() * 10) + 1;
+        var current = 1;
+
+        // Reset the output styling
+        output.style.opacity = 0;
+        output.style.transform = "scale(0)";
+
+        // Ensure the output is visible for 3 seconds
+        var displayDuration = 3000; // 3 seconds in milliseconds
+        var intervalDuration = 50; // Interval duration in milliseconds
+
+        var interval = setInterval(function () {
+          output.textContent = current;
+          output.style.opacity = 1; // Fade in
+          output.style.transform = "scale(1)"; // Scale up
+
+          current++;
+          if (current > target) {
+            clearInterval(interval);
+            setTimeout(function () {
+              output.style.opacity = 0; // Fade out after display duration
+            }, displayDuration - intervalDuration); // Keep it visible for 3 seconds minus the time taken to reach the target
+          }
+        }, intervalDuration); // Adjust the interval for speed
+
+        // Set a timeout to ensure the number stays visible for the desired duration
+        setTimeout(function () {
+          output.style.opacity = 0; // Fade out after the desired display duration
+        }, displayDuration);
+      }
+    </script>
+  </body>
+</html>
